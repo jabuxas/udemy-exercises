@@ -1,8 +1,4 @@
 public class NumberToWords {
-  public static void main(String[] args) {
-    numberToWords(100000);
-  }
-
   public static void numberToWords(int number) {
     if (number < 0) {
       System.out.println("Invalid Value");
@@ -13,14 +9,9 @@ public class NumberToWords {
       System.out.println("Zero");
       return;
     }
-    int reverse = 0;
-    while (number > 0) {
-      reverse += number % 10;
-      if (number > 10) {
-        reverse *= 10;
-      }
-      number /= 10;
-    }
+
+    int reverse = reverse(number);
+    int numOfZeros = getDigitCount(number) - getDigitCount(reverse);
 
     while (reverse != 0) {
       int lastDigit = reverse % 10;
@@ -38,5 +29,30 @@ public class NumberToWords {
       }
       reverse /= 10;
     }
+    for (int i = 1; i <= numOfZeros; i++) {
+      System.out.println("Zero");
+    }
+  }
+
+  public static int reverse(int number) {
+    if (number == 0) return 0;
+    int reverse = 0;
+    while (number != 0) {
+      reverse *= 10;
+      reverse += number % 10;
+      number /= 10;
+    }
+    return reverse;
+  }
+
+  public static int getDigitCount(int number) {
+    if (number < 0) return -1;
+    if (number == 0) return 1;
+    int count = 0;
+    while (number != 0) {
+      count++;
+      number /= 10;
+    }
+    return count;
   }
 }
